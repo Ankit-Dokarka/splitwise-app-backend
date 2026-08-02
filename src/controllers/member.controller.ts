@@ -10,6 +10,7 @@ export const getMembers = catchAsync(async (req: Request, res: Response) => {
     members,
   });
 });
+
 export const searchUsers = catchAsync(async (req: Request, res: Response) => {
   const { q } = req.query;
 
@@ -28,5 +29,27 @@ export const searchUsers = catchAsync(async (req: Request, res: Response) => {
   res.status(200).json({
     success: true,
     users,
+  });
+});
+
+export const addMember = catchAsync(async (req: Request, res: Response) => {
+  const { memberId } = req.body;
+
+  if (!memberId) {
+    return res.status(400).json({
+      success: false,
+      message: "Member ID is required.",
+    });
+  }
+
+  const member = await memberService.addMember(
+    req.user!._id.toString(),
+    memberId,
+  );
+
+  res.status(200).json({
+    success: true,
+    message: "Member added successfully.",
+    member,
   });
 });
