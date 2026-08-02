@@ -8,6 +8,7 @@ import errorHandler from "./middleware/errorHandler.js";
 import notFound from "./middleware/notFound.js";
 
 const app = express();
+
 app.use(cookieParser());
 
 app.use(
