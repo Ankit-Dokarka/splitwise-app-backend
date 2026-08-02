@@ -5,6 +5,8 @@ import cookieParser from "cookie-parser";
 
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
+import memberRoutes from "./routes/member.routes.js";
+
 import errorHandler from "./middleware/errorHandler.js";
 import notFound from "./middleware/notFound.js";
 import { env } from "./config/env.js";
@@ -25,6 +27,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/members", memberRoutes);
 
 app.get("/", (_req, res) => {
   res.status(200).json({
