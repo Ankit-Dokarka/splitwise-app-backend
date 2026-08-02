@@ -54,3 +54,5 @@ export const updateAvatar = async (userId: string, fileBuffer: Buffer) => {
 
   return user;
 };
+
+
