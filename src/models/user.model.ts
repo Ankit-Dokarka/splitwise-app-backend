@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, InferSchemaType, HydratedDocument } from "mongoose";
 
 const userSchema = new Schema(
   {
@@ -6,19 +6,15 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      trim: true,
     },
     fullName: {
       type: String,
       required: true,
-      trim: true,
     },
     email: {
       type: String,
       required: true,
       unique: true,
-      lowercase: true,
-      trim: true,
     },
     avatar: {
       type: String,
@@ -30,6 +26,9 @@ const userSchema = new Schema(
   },
 );
 
-const User = model("User", userSchema);
+export type UserType = InferSchemaType<typeof userSchema>;
+export type UserDocument = HydratedDocument<UserType>;
+
+const User = model<UserType>("User", userSchema);
 
 export default User;
