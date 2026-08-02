@@ -10,6 +10,9 @@ const {
   JWT_SECRET,
   JWT_EXPIRES_IN,
   NODE_ENV,
+  CLOUDINARY_CLOUD_NAME,
+  CLOUDINARY_API_KEY,
+  CLOUDINARY_API_SECRET,
 } = process.env;
 
 if (!PORT) {
@@ -35,6 +38,16 @@ if (!JWT_SECRET) {
 if (!JWT_EXPIRES_IN) {
   throw new Error("Missing required environment variable: JWT_EXPIRES_IN");
 }
+if (!CLOUDINARY_CLOUD_NAME)
+  throw new Error(
+    "Missing required environment variable: CLOUDINARY_CLOUD_NAME",
+  );
+if (!CLOUDINARY_API_KEY)
+  throw new Error("Missing required environment variable: CLOUDINARY_API_KEY");
+if (!CLOUDINARY_API_SECRET)
+  throw new Error(
+    "Missing required environment variable: CLOUDINARY_API_SECRET",
+  );
 
 export const env = {
   PORT: Number(PORT),
@@ -44,4 +57,7 @@ export const env = {
   JWT_SECRET,
   JWT_EXPIRES_IN,
   NODE_ENV: NODE_ENV ?? "development",
+  CLOUDINARY_CLOUD_NAME,
+  CLOUDINARY_API_KEY,
+  CLOUDINARY_API_SECRET,
 } as const;
