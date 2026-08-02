@@ -19,7 +19,7 @@ export const googleAuth = async ({ idToken }: GoogleAuthBody) => {
   }
 
   let user = await User.findOne({
-    googleId: payload.sub,
+    $or: [{ googleId: payload.sub }, { email: payload.email }],
   });
 
   if (!user) {
@@ -29,11 +29,16 @@ export const googleAuth = async ({ idToken }: GoogleAuthBody) => {
       email: payload.email,
       avatar: payload.picture,
     });
+  } else {
+    if (!user.googleId) {
+      user.googleId = payload.sub;
+    }
+
+    user.fullName = payload.name ?? user.fullName;
+    user.avatar = payload.picture ?? user.avatar;
+
+    await user.save();
   }
 
-  return {
-    success: true,
-    message: "Google login successful.",
-    user,
-  };
+  return user;
 };
