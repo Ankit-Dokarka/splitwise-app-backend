@@ -1,5 +1,6 @@
-import { env } from "../config/env.js";
 import googleClient from "../config/google.js";
+import { env } from "../config/env.js";
+import User from "../models/user.model.js";
 
 type GoogleAuthBody = {
   idToken: string;
@@ -17,15 +18,22 @@ export const googleAuth = async ({ idToken }: GoogleAuthBody) => {
     throw new Error("Failed to verify Google token.");
   }
 
-  return {
-    success: true,
-    message: "Google token verified successfully.",
-    user: {
+  let user = await User.findOne({
+    googleId: payload.sub,
+  });
+
+  if (!user) {
+    user = await User.create({
       googleId: payload.sub,
       fullName: payload.name,
       email: payload.email,
       avatar: payload.picture,
-      emailVerified: payload.email_verified,
-    },
+    });
+  }
+
+  return {
+    success: true,
+    message: "Google login successful.",
+    user,
   };
 };
