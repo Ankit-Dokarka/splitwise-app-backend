@@ -3,17 +3,26 @@ import catchAsync from "../utils/catchAsync.js";
 import * as expenseService from "../services/expense.service.js";
 
 export const createExpense = catchAsync(async (req: Request, res: Response) => {
-  const { description, amount, groupId, paidBy, participantIds } = req.body;
+  const { title, description, amount, groupId, paidBy, participantIds } =
+    req.body;
 
-  if (!description || !amount || !groupId || !paidBy || !participantIds) {
+  if (
+    !title ||
+    !description ||
+    !amount ||
+    !groupId ||
+    !paidBy ||
+    !participantIds
+  ) {
     return res.status(400).json({
       success: false,
       message:
-        "Missing required fields: description, amount, groupId, paidBy, participantIds",
+        "Missing required fields: title, description, amount, groupId, paidBy, participantIds",
     });
   }
 
   const expense = await expenseService.createExpense(req.user!._id.toString(), {
+    title,
     description,
     amount,
     groupId,

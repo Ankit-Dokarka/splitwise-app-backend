@@ -14,6 +14,11 @@ const participantSchema = new Schema({
 
 const expenseSchema = new Schema(
   {
+    title: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     description: {
       type: String,
       required: true,

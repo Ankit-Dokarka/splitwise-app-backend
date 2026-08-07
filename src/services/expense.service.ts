@@ -4,6 +4,7 @@ import Group from "../models/group.model.js";
 import { UserDocument } from "../models/user.model.js";
 
 type CreateExpenseInput = {
+  title: string;
   description: string;
   amount: number;
   groupId: string;
@@ -15,7 +16,7 @@ export const createExpense = async (
   currentUserId: string,
   data: CreateExpenseInput,
 ) => {
-  const { description, amount, groupId, paidBy, participantIds } = data;
+  const { title, description, amount, groupId, paidBy, participantIds } = data;
 
   if (amount <= 0) {
     throw new Error("Amount must be greater than zero.");
@@ -53,7 +54,6 @@ export const createExpense = async (
 
   const participantShares = finalParticipantIds.map((userId) => {
     let share = baseShare;
-
     if (userId === paidBy) {
       share += remainder;
     }
@@ -61,6 +61,7 @@ export const createExpense = async (
   });
 
   const expense = await Expense.create({
+    title,
     description,
     amount,
     groupId: new Types.ObjectId(groupId),
