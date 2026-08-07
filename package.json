@@ -1,5 +1,5 @@
 {
-  "name": "split-wise-backend-new",
+  "name": "share-mint-backend-new",
   "version": "1.0.0",
   "type": "module",
   "main": "dist/server.js",

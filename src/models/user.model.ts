@@ -20,12 +20,6 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    members: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
   },
   {
     timestamps: true,
